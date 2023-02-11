@@ -1,26 +1,6 @@
 const express = require('express');
 const buffer = require("node:buffer");
-
-function prendi_immagini(numero_evento)
-  {
-    db.query(
-      'select immagine from immagine where evento = ?' ,
-      [numero_evento],
-      (errore,immagine)=>
-      {
-        if(errore)
-        {
-          console.error(error);
-          res.status(500).json({status: 'error'});
-        }
-        else
-        {
-          console.error(error);
-          res.status(200).immagine(immagine);
-        }
-      }
-    )
-  }
+const fs = require('fs');
 
 function createRouter(db) 
 {
@@ -39,7 +19,6 @@ function createRouter(db)
           res.status(500).json({status: 'error'});
         } else 
         {
-            
           res.status(200).json(results);
         }
       }
@@ -66,6 +45,7 @@ function createRouter(db)
       }
     );
   });
+  //GET immagini. ritorna le immagini in base64. data:image/png
   router.get("/immagini",function (req, res, next)
   {
     db.query(
@@ -78,13 +58,18 @@ function createRouter(db)
           res.status(500).json({status: 'error'});
         } else 
         {
+          let b64=[]; 
+          let conta=0;
+
+          results.forEach(raw_immagine => {
+            b64[conta]= 
+            {
+              immagine:Buffer.from(raw_immagine.immagine).toString("base64"),
+              evento:raw_immagine.evento
+            }
+            conta++
+          });
           
-          const b64 = results.buffer().then((buffer) => 
-          {
-            const b64 = buffer.toString('base64');
-            return b64;
-          })
-          console.log(b64)
           res.status(200).json(b64);
         }
       }
