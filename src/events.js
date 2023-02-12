@@ -24,9 +24,15 @@ function createRouter(db)
       }
     );
   });
+  //ritorna il png del logo
   router.get('/logo', function (req, res, next) 
   {
     res.sendFile(__dirname + "/logo_finito.png");
+  });
+  //ritorna il png del background
+  router.get('/background', function (req, res, next) 
+  {
+    res.sendFile(__dirname + "/background_finito.png");
   });
 //GET nickname. ritorna tutti i nickname
   router.get('/nickname', function (req, res, next) 
@@ -62,6 +68,7 @@ function createRouter(db)
           let conta=0;
 
           results.forEach(raw_immagine => {
+            
             b64[conta]= 
             {
               immagine:Buffer.from(raw_immagine.immagine).toString("base64"),
