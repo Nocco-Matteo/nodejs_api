@@ -27,12 +27,12 @@ function createRouter(db)
   //ritorna il png del logo
   router.get('/logo', function (req, res, next) 
   {
-    res.sendFile(__dirname + "/logo_finito.png");
+    res.sendFile(__dirname + "/img/logo_finito.png");
   });
   //ritorna il png del background
   router.get('/background', function (req, res, next) 
   {
-    res.sendFile(__dirname + "/background_finito.png");
+    res.sendFile(__dirname + "/img/background_finito.png");
   });
 //GET nickname. ritorna tutti i nickname
   router.get('/nickname', function (req, res, next) 
